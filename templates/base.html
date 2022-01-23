@@ -7,6 +7,11 @@
     <title>Flask Survey</title>
   </head>
   <body>
-    {% block content %} {% endblock %}
+    {% with msg = get_flashed_messages() %} {% if msg %}
+    <script>
+      let message = {{ msg | safe }};
+      alert(message)
+    </script>
+    {% endif %} {% endwith %} {% block content %} {% endblock %}
   </body>
 </html>
