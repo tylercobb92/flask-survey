@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request, flash
+from flask import Flask, redirect, render_template, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from surveys import satisfaction_survey as survey
 
@@ -13,8 +13,15 @@ responses = []
 
 
 @app.route('/')
-def start_survey():
+def get_started():
     return render_template('start_survey.html', survey=survey)
+
+
+@app.route('/start', methods=['POST'])
+def start_survey():
+    session['responses'] = []
+
+    return redirect('/questions/0')
 
 
 @app.route('/questions/<int:question_id>')
